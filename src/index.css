@@ -19,3 +19,15 @@ html,
     width: 100dvw;
   }
 }
+
+.tooltip-text {
+  top: 150%;
+  left: 50%;
+  z-index: 10;
+  transform: translateX(-50%);
+}
+
+.relative:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

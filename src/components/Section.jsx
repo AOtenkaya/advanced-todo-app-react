@@ -1,8 +1,13 @@
+// packages
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
+
+// icons
 import { MdDelete, MdEdit } from 'react-icons/md';
 
+// redux actions
 import {
   addTodo,
   updateTodo,
@@ -10,16 +15,20 @@ import {
   deleteSection,
 } from '@/redux/slices/sectionsSlice';
 
+// components
 import TodoList from './TodoList';
 import TodoModal from './TodoModal';
+import Tooltip from './AppTooltip';
 
 const Section = ({ section }) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const [isTodoModalOpen, setIsTodoModalOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingSectionName, setisEditingSectionNameSectionName] =
+    useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
   const [sectionName, setSectionName] = useState(section.sectionName);
-
-  const dispatch = useDispatch();
 
   const handleTodoSubmit = (todo) => {
     if (currentTodo) {
@@ -44,8 +53,8 @@ const Section = ({ section }) => {
     dispatch(updateTodo({ sectionId: section.id, todo }));
   };
 
-  const handleEditSection = () => {
-    setIsEditing(true);
+  const handleEditSectionName = () => {
+    setisEditingSectionNameSectionName(true);
   };
 
   const handleSectionNameChange = (event) => {
@@ -59,7 +68,7 @@ const Section = ({ section }) => {
         sectionId: section.id,
       })
     );
-    setIsEditing(false);
+    setisEditingSectionNameSectionName(false);
   };
 
   const handleFocus = (event) => {
@@ -87,10 +96,10 @@ const Section = ({ section }) => {
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="flex flex-col w-96 h-100 rounded-md flex-shrink-0"
+            className="flex flex-col min-w-96 w-fit h-100 rounded-md flex-shrink-0 overflow-x-hidden"
           >
             <header className="flex h-12 min-w-5 justify-between items-center p-4 text-white rounded-t-md bg-gray-500">
-              {isEditing ? (
+              {isEditingSectionName ? (
                 <input
                   type="text"
                   value={sectionName}
@@ -101,31 +110,31 @@ const Section = ({ section }) => {
                   className="bg-transparent"
                 />
               ) : (
-                <h2 onDoubleClick={handleEditSection}>{sectionName}</h2>
+                <h2 onDoubleClick={handleEditSectionName}>{sectionName}</h2>
               )}
 
               <div className="flex gap-2 items-start justify-start">
-                <MdEdit
-                  size="2rem"
-                  color="blue"
-                  className="border-blue-700 border rounded-md p-1 hover:bg-gray-300"
-                  onClick={handleEditSection}
-                >
-                  Edit
-                </MdEdit>
+                <Tooltip text={t('edit_section_name')}>
+                  <MdEdit
+                    size="2rem"
+                    color="blue"
+                    className="border-blue-700 border rounded-md p-1 hover:bg-gray-300"
+                    onClick={handleEditSectionName}
+                  />
+                </Tooltip>
 
-                <MdDelete
-                  size="2rem"
-                  color="red"
-                  className="border-red-700 border rounded-md p-1 hover:bg-gray-300"
-                  onClick={handleDeleteSection}
-                >
-                  Delete
-                </MdDelete>
+                <Tooltip text={t('delete_section')}>
+                  <MdDelete
+                    size="2rem"
+                    color="red"
+                    className="border-red-700 border rounded-md p-1 hover:bg-gray-300"
+                    onClick={handleDeleteSection}
+                  />
+                </Tooltip>
               </div>
             </header>
 
-            <div className="flex flex-col h-full overflow-y-auto justify-between p-4 bg-mediumGray rounded-b-md">
+            <div className="flex flex-col h-full overflow-y-auto overflow-x-hidden justify-between p-4 bg-mediumGray rounded-b-md">
               <TodoList
                 todos={section.todos}
                 sectionId={section.id}
@@ -137,7 +146,7 @@ const Section = ({ section }) => {
                 className="w-full bg-slate-600 rounded-md p-2 text-white"
                 onClick={() => openTodoModal()}
               >
-                Add Todo
+                {t('add_todo')}
               </button>
             </div>
 

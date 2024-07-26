@@ -1,6 +1,8 @@
+// packages
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
+// components
 import TodoItem from './TodoItem';
 
 const TodoList = ({ todos, sectionId, onUpdateTodo }) => {

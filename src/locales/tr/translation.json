@@ -1,3 +1,13 @@
 {
-  
+  "advanced_todo_list": "Özelleştirilebilir Yapılacaklar Listesi",
+  "add_section": "Grup Ekle",
+  "edit_section_name": "Grup İsmini Düzenle",
+  "delete_section": "Grubu Sil",
+  "add_todo": "Yapılacak Ekle",
+  "edit_todo": "Yapılacağı Düzenle",
+  "delete_todo": "Yapılacağı Sil",
+  "title": "Başlık",
+  "detail": "Detay",
+  "save": "Kaydet",
+  "cancel": "İptal"
 }

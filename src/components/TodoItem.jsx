@@ -1,10 +1,19 @@
-import { MdEdit, MdDelete } from 'react-icons/md';
+// packages
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
+// icons
+import { MdEdit, MdDelete } from 'react-icons/md';
+
+// redux actions
 import { deleteTodo } from '@/redux/slices/sectionsSlice';
+
+// components
+import Tooltip from './AppTooltip';
 
 const TodoItem = ({ todo, onUpdateTodo, sectionId, isDragging }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleDeleteTodo = (sectionId, todoId) => {
     dispatch(deleteTodo({ sectionId, todoId }));
@@ -16,23 +25,23 @@ const TodoItem = ({ todo, onUpdateTodo, sectionId, isDragging }) => {
         <h3 className="text-white">{todo.title}</h3>
 
         <div className="flex">
-          <MdEdit
-            size="1.5rem"
-            color="blue"
-            className="rounded hover:bg-gray-300 mx-1"
-            onClick={() => onUpdateTodo(todo)}
-          >
-            Edit
-          </MdEdit>
+          <Tooltip text={t('edit_todo')}>
+            <MdEdit
+              size="1.5rem"
+              color="blue"
+              className="rounded hover:bg-gray-300 mx-1"
+              onClick={() => onUpdateTodo(todo)}
+            />
+          </Tooltip>
 
-          <MdDelete
-            size="1.5rem"
-            color="red"
-            className="rounded hover:bg-gray-300"
-            onClick={() => handleDeleteTodo(sectionId, todo.id)}
-          >
-            Delete
-          </MdDelete>
+          <Tooltip text={t('delete_todo')}>
+            <MdDelete
+              size="1.5rem"
+              color="red"
+              className="rounded hover:bg-gray-300"
+              onClick={() => handleDeleteTodo(sectionId, todo.id)}
+            />
+          </Tooltip>
         </div>
       </header>
 

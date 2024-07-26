@@ -2,8 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext } from 'react-beautiful-dnd';
 
+// components
 import Section from './Section.jsx';
 
+// redux actions
 import { reorderTodos } from '@/redux/slices/sectionsSlice';
 
 const SectionList = () => {

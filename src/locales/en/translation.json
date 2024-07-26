@@ -1,3 +1,13 @@
 {
-  
+  "advanced_todo_list": "Advanced Todo List",
+  "add_section": "Add Section",
+  "edit_section_name": "Edit Section Name",
+  "delete_section": "Delete Section",
+  "add_todo": "Add Todo",
+  "edit_todo": "Edit Todo",
+  "delete_todo": "Delete Todo",
+  "title": "Title",
+  "detail": "Detail",
+  "save": "Save",
+  "cancel": "Cancel"
 }

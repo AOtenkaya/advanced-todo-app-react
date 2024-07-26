@@ -1,9 +1,13 @@
+// packages
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
+  const { t } = useTranslation();
+
   const validationSchema = Yup.object({
     title: Yup.string().required('Title is required'),
   });
@@ -31,7 +35,7 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
             <Form className="space-y-4">
               <header>
                 <h2 className="text-xl font-bold mb-4">
-                  {isEdit ? 'Edit Todo' : 'Create Todo'}
+                  {isEdit ? t('edit_todo') : t('add_todo')}
                 </h2>
               </header>
 
@@ -40,7 +44,7 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
                   htmlFor="title"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Title
+                  {t('title')}
                 </label>
 
                 <Field
@@ -62,7 +66,7 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
                   htmlFor="detail"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Detail
+                  {t('detail')}
                 </label>
 
                 <Field
@@ -85,7 +89,7 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
                   disabled={isSubmitting}
                   className="bg-blue-500 text-white px-4 py-2 mx-2 rounded"
                 >
-                  Save
+                  {t('save')}
                 </button>
 
                 <button
@@ -93,7 +97,7 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
                   onClick={onClose}
                   className="bg-gray-500 text-white px-4 py-2 rounded"
                 >
-                  Cancel
+                  {t('cancel')}
                 </button>
               </footer>
             </Form>

@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+// packages
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
+// redux actions and selectors
 import { addSection } from '@/redux/slices/sectionsSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleAddSection = () => {
     dispatch(
@@ -20,14 +24,14 @@ const Header = () => {
   return (
     <>
       <header className="flex justify-between items-center p-4 bg-slate-600 font-semibold text-2xl">
-        <h1 className="text-white">Advanced Todo List</h1>
+        <h1 className="text-white">{t('advanced_todo_list')}</h1>
 
         <button
           type="button"
           className="text-white border-black-700 border rounded-md px-4 py-2 hover:bg-slate-600"
           onClick={handleAddSection}
         >
-          Add Section
+          {t('add_section')}
         </button>
       </header>
     </>
