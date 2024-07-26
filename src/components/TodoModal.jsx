@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
   const validationSchema = Yup.object({
-    task: Yup.string().required('Task is required'),
+    title: Yup.string().required('Title is required'),
   });
 
   return createPortal(
@@ -14,7 +14,7 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="absolute bg-white p-5 rounded-md w-1/2 max-w-3/4 box-shadow-md"
+        className="absolute bg-white p-5 rounded-md w-1/3 max-w-3/4 box-shadow-md"
         onClick={(e) => e.stopPropagation()}
       >
         <Formik
@@ -24,29 +24,56 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
             onSubmit(values);
             onClose();
           }}
+          validateOnBlur={false}
+          validateOnChange={false}
         >
           {({ isSubmitting }) => (
             <Form className="space-y-4">
               <header>
                 <h2 className="text-xl font-bold mb-4">
-                  {isEdit ? 'Edit Task' : 'Create Task'}
+                  {isEdit ? 'Edit Todo' : 'Create Todo'}
                 </h2>
               </header>
 
               <div>
                 <label
-                  htmlFor="task"
+                  htmlFor="title"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Task
+                  Title
                 </label>
+
                 <Field
                   type="text"
-                  name="task"
+                  name="title"
+                  className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                  autoFocus
+                />
+
+                <ErrorMessage
+                  name="title"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="detail"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Detail
+                </label>
+
+                <Field
+                  type="text"
+                  name="detail"
+                  as="textarea"
                   className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
                 />
+
                 <ErrorMessage
-                  name="task"
+                  name="detail"
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />
@@ -58,8 +85,9 @@ const TodoModal = ({ isEdit, initialValues, onSubmit, onClose }) => {
                   disabled={isSubmitting}
                   className="bg-blue-500 text-white px-4 py-2 mx-2 rounded"
                 >
-                  {isEdit ? 'Update Task' : 'Add Task'}
+                  Save
                 </button>
+
                 <button
                   type="button"
                   onClick={onClose}

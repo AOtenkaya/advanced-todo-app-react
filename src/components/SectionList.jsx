@@ -4,15 +4,11 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 import Section from './Section.jsx';
 
-import { deleteSection, reorderTodos } from '@/redux/slices/sectionsSlice';
+import { reorderTodos } from '@/redux/slices/sectionsSlice';
 
 const SectionList = () => {
   const sections = useSelector((state) => state.sections.sections);
   const dispatch = useDispatch();
-
-  const handleDeleteSection = (sectionId) => {
-    dispatch(deleteSection(sectionId));
-  };
 
   const handleDragEnd = (result) => {
     const { source, destination } = result;
@@ -30,13 +26,9 @@ const SectionList = () => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="flex h-full w-full px-4 py-8 gap-3 bg-rose-300 overflow-x-auto">
+      <div className="flex h-full w-full px-4 py-8 gap-3 overflow-x-auto bg-darkGray">
         {sections.map((section) => (
-          <Section
-            key={section.id}
-            section={section}
-            onDeleteSection={() => handleDeleteSection(section.id)}
-          />
+          <Section key={section.id} section={section} />
         ))}
       </div>
     </DragDropContext>

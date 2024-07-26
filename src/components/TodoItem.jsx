@@ -1,7 +1,9 @@
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 
-const TodoItem = ({ todo, onUpdateTodo }) => {
+import { deleteTodo } from '@/redux/slices/sectionsSlice';
+
+const TodoItem = ({ todo, onUpdateTodo, sectionId, isDragging }) => {
   const dispatch = useDispatch();
 
   const handleDeleteTodo = (sectionId, todoId) => {
@@ -9,27 +11,33 @@ const TodoItem = ({ todo, onUpdateTodo }) => {
   };
 
   return (
-    <div className="flex w-full h-40 justify-between items-center p-2 border rounded shadow mb-2 bg-white hover:bg-gray-100 cursor-pointer">
-      <h3>{todo.task}</h3>
+    <div className="flex flex-col w-full h-40 rounded-md justify-between items-center shadow mb-2 bg-gray-500 hover:bg-gray-600 cursor-pointer">
+      <header className="flex h-10 w-full justify-between items-center bg-gray-500 px-2 rounded-t-md">
+        <h3 className="text-white">{todo.title}</h3>
 
-      <div className="flex gap-2">
-        <MdEdit
-          size="2rem"
-          color="blue"
-          className="border-blue-500 border rounded p-1 hover:bg-gray-200"
-          onClick={() => onUpdateTodo(todo)}
-        >
-          Edit
-        </MdEdit>
+        <div className="flex">
+          <MdEdit
+            size="1.5rem"
+            color="blue"
+            className="rounded hover:bg-gray-300 mx-1"
+            onClick={() => onUpdateTodo(todo)}
+          >
+            Edit
+          </MdEdit>
 
-        <MdDelete
-          size="2rem"
-          color="red"
-          className="border-red-500 border rounded p-1 hover:bg-gray-200"
-          onClick={() => handleDeleteTodo(sectionId, todo.id)}
-        >
-          Delete
-        </MdDelete>
+          <MdDelete
+            size="1.5rem"
+            color="red"
+            className="rounded hover:bg-gray-300"
+            onClick={() => handleDeleteTodo(sectionId, todo.id)}
+          >
+            Delete
+          </MdDelete>
+        </div>
+      </header>
+
+      <div className="flex flex-grow w-full rounded-b-md p-2 bg-white">
+        {todo.detail}
       </div>
     </div>
   );

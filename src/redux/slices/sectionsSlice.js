@@ -7,7 +7,6 @@ const initialState = {
       id: Date.now().toString(),
       sectionName: 'Todo',
       todos: [],
-      backgroundColor: '#53ee87',
     },
   ],
 };
@@ -25,15 +24,19 @@ const sectionsSlice = createSlice({
       );
     },
     updateSectionName: (state, actions) => {
-      const { newSectionName, sectionId } = actions.payload;
+      const { sectionName, sectionId } = actions.payload;
 
-      const relatedSection = state.sections.find((section) => {
-        section.id = sectionId;
-      });
-      relatedSection.sectionName = newSectionName;
+      const relatedSection = state.sections.find(
+        (section) => section.id === sectionId
+      );
+
+      if (relatedSection) {
+        relatedSection.sectionName = sectionName;
+      }
     },
     addTodo: (state, actions) => {
       const { sectionId, todo } = actions.payload;
+
       const relatedSection = state.sections.find(
         (section) => section.id === sectionId
       );
