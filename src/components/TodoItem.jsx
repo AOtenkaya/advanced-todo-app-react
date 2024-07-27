@@ -1,4 +1,5 @@
 // packages
+import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +12,7 @@ import { deleteTodo } from '@/redux/slices/sectionsSlice';
 // components
 import Tooltip from './AppTooltip';
 
-const TodoItem = ({ todo, onUpdateTodo, sectionId, isDragging }) => {
+const TodoItem = memo(({ todo, onUpdateTodo, sectionId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -50,6 +51,6 @@ const TodoItem = ({ todo, onUpdateTodo, sectionId, isDragging }) => {
       </div>
     </div>
   );
-};
+});
 
 export default TodoItem;

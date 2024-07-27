@@ -1,5 +1,5 @@
 // packages
-import React, { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Droppable } from 'react-beautiful-dnd';
 import { useTranslation } from 'react-i18next';
@@ -20,24 +20,14 @@ import TodoList from './TodoList';
 import TodoModal from './TodoModal';
 import Tooltip from './AppTooltip';
 
-const Section = ({ section }) => {
+const Section = memo(({ section }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const [isTodoModalOpen, setIsTodoModalOpen] = useState(false);
-  const [isEditingSectionName, setisEditingSectionNameSectionName] =
-    useState(false);
+  const [isEditingSectionName, setIsEditingSectionName] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
   const [sectionName, setSectionName] = useState(section.sectionName);
-
-  const handleTodoSubmit = (todo) => {
-    if (currentTodo) {
-      handleUpdateTodo(todo);
-    } else {
-      handleAddTodo(todo);
-    }
-    closeTodoModal();
-  };
 
   const handleAddTodo = (todo) => {
     dispatch(
@@ -53,8 +43,20 @@ const Section = ({ section }) => {
     dispatch(updateTodo({ sectionId: section.id, todo }));
   };
 
+  const handleTodoSubmit = useCallback(
+    (todo) => {
+      if (currentTodo) {
+        handleUpdateTodo(todo);
+      } else {
+        handleAddTodo(todo);
+      }
+      closeTodoModal();
+    },
+    [currentTodo, handleUpdateTodo, handleAddTodo]
+  );
+
   const handleEditSectionName = () => {
-    setisEditingSectionNameSectionName(true);
+    setIsEditingSectionName(true);
   };
 
   const handleSectionNameChange = (event) => {
@@ -68,7 +70,7 @@ const Section = ({ section }) => {
         sectionId: section.id,
       })
     );
-    setisEditingSectionNameSectionName(false);
+    setIsEditingSectionName(false);
   };
 
   const handleFocus = (event) => {
@@ -79,10 +81,13 @@ const Section = ({ section }) => {
     dispatch(deleteSection(section.id));
   };
 
-  const openTodoModal = (todo = null) => {
-    setCurrentTodo(todo);
-    setIsTodoModalOpen(true);
-  };
+  const openTodoModal = useCallback(
+    (todo = null) => {
+      setCurrentTodo(todo);
+      setIsTodoModalOpen(true);
+    },
+    [setCurrentTodo, setIsTodoModalOpen]
+  );
 
   const closeTodoModal = () => {
     setCurrentTodo(null);
@@ -165,6 +170,6 @@ const Section = ({ section }) => {
       )}
     </>
   );
-};
+});
 
 export default Section;

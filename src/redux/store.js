@@ -5,7 +5,7 @@ const store = configureStore({
   reducer: {
     sections: sectionsReducer,
   },
-  devTools: process.env.NODE_ENV !== 'production', // Enable DevTools in development
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export default store;
