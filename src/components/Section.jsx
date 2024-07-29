@@ -24,11 +24,50 @@ const Section = memo(({ section }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  // Handling todo modal state and current todo for editing
   const [isTodoModalOpen, setIsTodoModalOpen] = useState(false);
-  const [isEditingSectionName, setIsEditingSectionName] = useState(false);
   const [currentTodo, setCurrentTodo] = useState(null);
+
+  const openTodoModal = useCallback(
+    (todo = null) => {
+      setCurrentTodo(todo);
+      setIsTodoModalOpen(true);
+    },
+    [setCurrentTodo, setIsTodoModalOpen]
+  );
+
+  const closeTodoModal = () => {
+    setCurrentTodo(null);
+    setIsTodoModalOpen(false);
+  };
+
+  // Handling section name changes
+  const [isEditingSectionName, setIsEditingSectionName] = useState(false);
   const [sectionName, setSectionName] = useState(section.sectionName);
 
+  const handleEditSectionName = () => {
+    setIsEditingSectionName(true);
+  };
+
+  const handleSectionNameChange = (event) => {
+    setSectionName(event.target.value);
+  };
+
+  const handleSectionNameBlur = () => {
+    dispatch(
+      updateSectionName({
+        sectionName,
+        sectionId: section.id,
+      })
+    );
+    setIsEditingSectionName(false);
+  };
+
+  const handleFocus = (event) => {
+    event.target.select();
+  };
+
+  // Handling todo events
   const handleAddTodo = (todo) => {
     dispatch(
       addTodo({
@@ -55,43 +94,9 @@ const Section = memo(({ section }) => {
     [currentTodo, handleUpdateTodo, handleAddTodo]
   );
 
-  const handleEditSectionName = () => {
-    setIsEditingSectionName(true);
-  };
-
-  const handleSectionNameChange = (event) => {
-    setSectionName(event.target.value);
-  };
-
-  const handleSectionNameBlur = () => {
-    dispatch(
-      updateSectionName({
-        sectionName,
-        sectionId: section.id,
-      })
-    );
-    setIsEditingSectionName(false);
-  };
-
-  const handleFocus = (event) => {
-    event.target.select();
-  };
-
+  // Handling section events
   const handleDeleteSection = () => {
     dispatch(deleteSection(section.id));
-  };
-
-  const openTodoModal = useCallback(
-    (todo = null) => {
-      setCurrentTodo(todo);
-      setIsTodoModalOpen(true);
-    },
-    [setCurrentTodo, setIsTodoModalOpen]
-  );
-
-  const closeTodoModal = () => {
-    setCurrentTodo(null);
-    setIsTodoModalOpen(false);
   };
 
   return (
